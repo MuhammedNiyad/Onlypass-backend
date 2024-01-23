@@ -9,15 +9,19 @@ app.use(cors());
 app.use(express.json());
 
 
+app.use('/api/fecilities', require('./routes/fecilities'));
+app.use('/api/amenities', require('./routes/amenities'));
+
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log("MongoDB connected successfully..!");
+    console.log("MongoDB Connected 🥳...!");
   })
   .catch((err) => {
     console.log(err);
   });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log("Backend server is running..!");
+  console.log("Backend is working😇...!");
 });

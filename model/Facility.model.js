@@ -47,7 +47,7 @@ const facilitySchema = new mongoose.Schema({
   Descreption:{
     type:String,
   },
-  facility_images:[
+  facility_images:[      //want to specify.............!
     {
         type:String,
     },
@@ -74,10 +74,52 @@ const facilitySchema = new mongoose.Schema({
         },
     },
   ],
-  
+  equipments:[
+    {
+        equipments_id:{
+            type:String,
+        },
+    },
+  ],
+  time:[    //want to speciry.........!
+    {
+        timing_morning:{
+            type:String,
+        },
+        timing_evening:{
+            type:String,
+        },
+    },
+  ],
+  amount_per_day:{
+    type:Number,
+  },
+  review:[     //want to specify......!
+    {
+      type:String,
+    }
+  ],
+  admission_fee:{
+    type:String,
+  },
+  daily_pass:{
+    type:Boolean,
+  },
+  three_month_pass:{
+    type:Number,
+  },
+  six_month_pass:{
+    type:Number,
+  },
+  other:{
+    type:String,
+  },
+  annual_pass:{
+    type:Number,
+  }
+},{timestamps:true});
 
 
+const Fecilities = mongoose.model("Fecilities", facilitySchema);
 
-
-
-});
+module.exports = Fecilities;
