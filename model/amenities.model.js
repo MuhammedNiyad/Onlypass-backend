@@ -6,9 +6,9 @@ const amenitiesSchame = new mongoose.Schema({
         type:String,
         required: true,
     },
-    isPaid:{
+    available:{
         type:Boolean,
-        required: true,
+        default:true,
     }
 },{timestamps:true})
 

@@ -9,8 +9,13 @@ app.use(cors());
 app.use(express.json());
 
 
+
 app.use('/api/fecilities', require('./routes/fecilities'));
 app.use('/api/amenities', require('./routes/amenities'));
+app.use('/api/equipments', require('./routes/equipments'));
+app.use('/api/images', require('./routes/fecility_image_upload'));
+app.use('/api/gender', require('./routes/gender'));
+app.use('/api/country', require('./routes/country'));
 
 
 mongoose
