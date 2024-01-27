@@ -16,6 +16,8 @@ app.use('/api/equipments', require('./routes/equipments'));
 app.use('/api/images', require('./routes/fecility_image_upload'));
 app.use('/api/gender', require('./routes/gender'));
 app.use('/api/country', require('./routes/country'));
+app.use('/api/tier', require('./routes/tier'));
+app.use('/api/fecility-type', require('./routes/fecility_type'));
 
 
 mongoose

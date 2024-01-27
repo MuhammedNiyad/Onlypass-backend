@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const facilitySchema = new mongoose.Schema(
   {
@@ -6,32 +7,34 @@ const facilitySchema = new mongoose.Schema(
       type: String,
     },
     tier_id: {
-      type: String,
-      //tier_id want to specify......!
+      type:Schema.Types.ObjectId,
+      ref:"Tier",
     },
     gym_gender: {
       type: String,
       required: true,
     },
-    gym_name: {
+    fecility_name: {
       type: String,
       required: true,
     },
-    owner_name: {
+    contact_person_name: {
       //contact_person_name
       type: String,
       required: true,
     },
-    facility_type: [
-      {
-        access: { type: Boolean },
-        pass: { type: Boolean },
+    facility_type: {
+      fecility_type_id:{
+        type: String,
       },
-    ],
+      isPaid:{
+        type: Boolean,
+      }
+    },
     email: {
       type: String,
     },
-    owner_phone_number: {
+    phone_number: {
       //contact person_phone_number...!
       type: Number,
       required: true,
@@ -70,17 +73,31 @@ const facilitySchema = new mongoose.Schema(
     equipments_id: {
       type: Array,
     },
-    timing: [
-      //want to speciry.........!
+    fecility_timing: [
       {
-        morning: {
-          type: String,
-        },
-        evening: {
-          type: String,
-        },
+      Monday: {
+        type:Object,
       },
-    ],
+      Tuesday: {
+        type:Object,
+      },
+      Wednesday: {
+        type:Object,
+      },
+      Thursday: {
+        type:Object,
+      },
+      Friday: {
+        type:Object,
+      },
+      Saturday: {
+        type:Object,
+      },
+      Sunday: {
+        type:Object,
+      }
+    },
+  ],
     admission_fee: {
       type: String,
     },

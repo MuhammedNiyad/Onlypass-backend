@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const tierSchema = new mongoose.Schema({
     name: {
-        type:Strings,
+        type:String,
         required: true,
     }
 },{timestamps:true});

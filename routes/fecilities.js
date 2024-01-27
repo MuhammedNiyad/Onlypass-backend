@@ -20,12 +20,13 @@ const uploadFecilityLogo = multer({ storage: storage });
 //  CREATE FECILITIES.....!
 router.post("/create", uploadFecilityLogo.single("gym_logo"), async (req, res) => {
     try {
+      // console.log('reqbody: ', req.body);
       const newFecilities = new Fecilities({
         user_role: req.body.user_role,
         tier_id: req.body.tier_id,
         gym_gender: req.body.gym_gender,
-        gym_name: req.body.gym_name,
-        owner_name: req.body.owner_name,
+        fecility_name: req.body.fecility_name,
+        contact_person_name: req.body.contact_person_name,
         facility_type: [
           {
             access: req.body.access,
@@ -33,7 +34,7 @@ router.post("/create", uploadFecilityLogo.single("gym_logo"), async (req, res) =
           },
         ],
         email: req.body.email,
-        owner_phone_number: req.body.owner_phone_number,
+        phone_number: req.body.phone_number,
         gym_website: req.body.gym_website,
         gym_logo: req.file.filename,
         descreption: req.body.description,
@@ -45,12 +46,7 @@ router.post("/create", uploadFecilityLogo.single("gym_logo"), async (req, res) =
         latitude_Lognitude: req.body.latitude_Lognitude,
         aminities_id: req.body.aminities_id,
         equipments_id: req.body.equipments_id,
-        timing: [
-          {
-            morning: req.body.morning,
-            evening: req.body.evening,
-          },
-        ],
+        fecility_timing: req.body.fecility_timing,
         admission_fee: req.body.admission_fee,
         amount_per_day: req.body.amount_per_day,
         daily_pass: req.body.daily_pass,
