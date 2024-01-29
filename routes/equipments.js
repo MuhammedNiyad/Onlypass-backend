@@ -76,7 +76,6 @@ router.get('/all-equipment', async (req, res)=>{
 });
 
 
-
 // GET IMAGES.....
 router.get(`/images/:imageName`, (req, res) => {
     const imageName = req.params.imageName; // Retrieve the image name from the URL parameter
@@ -84,9 +83,6 @@ router.get(`/images/:imageName`, (req, res) => {
     const imagePath = path.join(imagesFolder, imageName); // Construct the full image path
     res.sendFile(imagePath); // Send the image file as a response
 });
-
-
-
 
 
 

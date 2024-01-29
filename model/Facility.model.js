@@ -6,53 +6,56 @@ const facilitySchema = new mongoose.Schema(
     user_role: {
       type: String,
     },
-    tier_id: {
-      type:Schema.Types.ObjectId,
-      ref:"Tier",
+    tier: {
+      // type:Schema.Types.ObjectId,
+      // ref:"Tier",
+      type: String,
     },
-    gym_gender: {
+    gender: {
       type: String,
       required: true,
     },
-    fecility_name: {
+    facilityName: {
       type: String,
       required: true,
     },
-    contact_person_name: {
+    contactPerson: {
       //contact_person_name
       type: String,
       required: true,
     },
     facility_type: {
-      fecility_type_id:{
-        type: String,
-      },
-      isPaid:{
-        type: Boolean,
-      }
+      type: String,
+      // facility_type_name: {
+      //   type: String,
+      // },
+      // isPaid: {
+      //   type: Boolean,
+      //   default: true,
+      // },
     },
-    email: {
+    emailAddress: {
       type: String,
     },
-    phone_number: {
+    phoneNumber: {
       //contact person_phone_number...!
       type: Number,
       required: true,
       unique: true,
     },
-    gym_website: {
+    websiteURL: {
       type: String,
     },
-    gym_logo: {
+    logoUrl: {
       type: String,
     },
-    descreption: {
+    description: {
       type: String,
     },
-    facility_imgs_id: {
+    images: {
       type: Array,
     },
-    gym_address: {
+    address: {
       type: String,
     },
     pin_code: {
@@ -73,31 +76,31 @@ const facilitySchema = new mongoose.Schema(
     equipments_id: {
       type: Array,
     },
-    fecility_timing: [
+    facility_timing: [
       {
-      Monday: {
-        type:Object,
+        Monday: {
+          type: Object,
+        },
+        Tuesday: {
+          type: Object,
+        },
+        Wednesday: {
+          type: Object,
+        },
+        Thursday: {
+          type: Object,
+        },
+        Friday: {
+          type: Object,
+        },
+        Saturday: {
+          type: Object,
+        },
+        Sunday: {
+          type: Object,
+        },
       },
-      Tuesday: {
-        type:Object,
-      },
-      Wednesday: {
-        type:Object,
-      },
-      Thursday: {
-        type:Object,
-      },
-      Friday: {
-        type:Object,
-      },
-      Saturday: {
-        type:Object,
-      },
-      Sunday: {
-        type:Object,
-      }
-    },
-  ],
+    ],
     admission_fee: {
       type: String,
     },
@@ -127,6 +130,6 @@ const facilitySchema = new mongoose.Schema(
 );
 
 
-const Fecilities = mongoose.model("Fecilities", facilitySchema);
+const Facilities = mongoose.model("Facilities", facilitySchema);
 
-module.exports = Fecilities;
+module.exports = Facilities;

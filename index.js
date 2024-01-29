@@ -10,14 +10,14 @@ app.use(express.json());
 
 
 
-app.use('/api/fecilities', require('./routes/fecilities'));
+app.use('/api/facilities', require('./routes/facilities'));
 app.use('/api/amenities', require('./routes/amenities'));
 app.use('/api/equipments', require('./routes/equipments'));
-app.use('/api/images', require('./routes/fecility_image_upload'));
+app.use('/api/images', require('./routes/facility_image_upload'));
 app.use('/api/gender', require('./routes/gender'));
 app.use('/api/country', require('./routes/country'));
 app.use('/api/tier', require('./routes/tier'));
-app.use('/api/fecility-type', require('./routes/fecility_type'));
+app.use('/api/facility-type', require('./routes/facility_type'));
 
 
 mongoose

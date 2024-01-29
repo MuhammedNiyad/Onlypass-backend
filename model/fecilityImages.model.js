@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
 
 
-const fecility_images = new mongoose.Schema({
-  fecility_id: {
-    type:Schema.Types.ObjectId,
-    ref:"Fecilities",
-  },
-  fecility_images:{
-    type:Array,
+const facility_images = new mongoose.Schema({
+  // facility_id: {
+  //   type:Schema.Types.ObjectId,
+  //   ref:"Facilities",
+  // },
+  facility_images:{
+    type:String,
   }
 },{timestamps:true});
 
-const FecilityImgs = mongoose.model('FecilityImgs', fecility_images);
+const FacilityImgs = mongoose.model('FacilityImgs', facility_images);
 
-module.exports = FecilityImgs;
+module.exports = FacilityImgs;

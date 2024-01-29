@@ -35,7 +35,7 @@ router.get('/', async (req, res)=>{
         res.status(200).json(amenities);  
         // console.log(amenities);        
     } catch (error) {
-        res.status(500),json({message: error.message});
+        res.status(500).json({message: error.message});
     }
 });
 

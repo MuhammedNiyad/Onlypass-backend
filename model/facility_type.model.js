@@ -7,6 +7,6 @@ const facility_typeSchema = new mongoose.Schema({
     }
 },{timestamp:true})
 
-const FecilityType = mongoose.model("FecilityType", facility_typeSchema);
+const FacilityType = mongoose.model("FacilityType", facility_typeSchema);
 
-module.exports = FecilityType;
+module.exports = FacilityType;

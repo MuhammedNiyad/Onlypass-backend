@@ -1,52 +1,32 @@
 const express = require("express");
-const Fecilities = require("../model/Facility.model");
+const Facilities = require("../model/Facility.model");
 const router = express.Router();
-const multer = require("multer");
-const path = require("path");
-
-// this for save gym logo.......!
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Upload/fecility_logo");
-  },
-
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
-const uploadFecilityLogo = multer({ storage: storage });
 
 //  CREATE FECILITIES.....!
-router.post("/create", uploadFecilityLogo.single("gym_logo"), async (req, res) => {
+router.post("/create", async (req, res) => {
+  console.log('reqbody: ', req.body);
     try {
-      // console.log('reqbody: ', req.body);
-      const newFecilities = new Fecilities({
+      const newFacilities = new Facilities({
         user_role: req.body.user_role,
-        tier_id: req.body.tier_id,
-        gym_gender: req.body.gym_gender,
-        fecility_name: req.body.fecility_name,
-        contact_person_name: req.body.contact_person_name,
-        facility_type: [
-          {
-            access: req.body.access,
-            pass: req.body.pass,
-          },
-        ],
-        email: req.body.email,
-        phone_number: req.body.phone_number,
-        gym_website: req.body.gym_website,
-        gym_logo: req.file.filename,
+        tier: req.body.tier,
+        gender: req.body.gender,
+        facilityName: req.body.facilityName,
+        contactPerson: req.body.contactPerson,
+        facility_type: req.body.facility_type,
+        emailAddress: req.body.emailAddress,
+        phoneNumber: req.body.phoneNumber,
+        websiteURL: req.body.websiteURL,
+        logoUrl: req.body.logoUrl,
         descreption: req.body.description,
-        facility_imgs_id: req.body.facility_imgs_id,
-        gym_address: req.body.gym_address,
+        images: req.body.images,
+        address: req.body.address,
         pin_code: req.body.pin_code,
         country: req.body.country,
         state: req.body.state,
         latitude_Lognitude: req.body.latitude_Lognitude,
         aminities_id: req.body.aminities_id,
         equipments_id: req.body.equipments_id,
-        fecility_timing: req.body.fecility_timing,
+        facility_timing: req.body.facility_timing,
         admission_fee: req.body.admission_fee,
         amount_per_day: req.body.amount_per_day,
         daily_pass: req.body.daily_pass,
@@ -56,9 +36,9 @@ router.post("/create", uploadFecilityLogo.single("gym_logo"), async (req, res) =
         other: req.body.other,
         review: req.body.review,
       });
-      await newFecilities.save(); //saving the newFecilities to the database...!
-      console.log(newFecilities);
-      res.status(200).json("fecilities created");
+      await newFacilities.save(); //saving the newFecilities to the database...!
+      console.log(newFacilities);
+      res.status(200).json("facilities created");
     } catch (error) {
       console.log("error: ", error.message);
       res.status(500).json({message: error.message});
@@ -77,14 +57,14 @@ router.put("/update/:id", async (req, res) => {
       : {
           ...req.body,
         };
-    const updatedFecilities = await Fecilities.findByIdAndUpdate(
+    const updatedFacilities = await Facilities.findByIdAndUpdate(
       req.params.id,
       {
         $set: update,
       },
       { new: true }
     );
-    res.status(200).json(updatedFecilities);
+    res.status(200).json(updatedFacilities);
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);
@@ -94,8 +74,8 @@ router.put("/update/:id", async (req, res) => {
 // DELETE FECILITIES.......!
 router.delete("/remove/:id", async (req, res) => {
   try {
-    await Fecilities.findByIdAndDelete(req.params.id);
-    res.status(200).json("Fecilities has been deleted...!");
+    await Facilities.findByIdAndDelete(req.params.id);
+    res.status(200).json("Facilities has been deleted...!");
   } catch (error) {
     res.status(500).json(error);
   }
@@ -104,8 +84,8 @@ router.delete("/remove/:id", async (req, res) => {
 // GET FECILITIES.....!
 router.get("/:id", async (req, res) => {
   try {
-    const fecilities = await Fecilities.findById(req.params.id);
-    res.status(200).json(fecilities);
+    const facilities = await Facilities.findById(req.params.id);
+    res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);
   }
@@ -114,8 +94,8 @@ router.get("/:id", async (req, res) => {
 // GET ALL FECILITIES......!
 router.get("/", async (req, res) => {
   try {
-    const fecilities = await Fecilities.find();
-    res.status(200).json(fecilities);
+    const facilities = await Facilities.find();
+    res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);
   }
