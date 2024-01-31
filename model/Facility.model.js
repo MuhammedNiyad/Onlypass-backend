@@ -39,9 +39,9 @@ const facilitySchema = new mongoose.Schema(
     },
     phoneNumber: {
       //contact person_phone_number...!
-      type: Number,
+      type: String,
       required: true,
-      unique: true,
+      // unique: true,
     },
     websiteURL: {
       type: String,
@@ -67,7 +67,7 @@ const facilitySchema = new mongoose.Schema(
     state: {
       type: String,
     },
-    latitude_Lognitude: {
+    latitude_lognitude: {
       type: String,
     },
     aminities_id: {

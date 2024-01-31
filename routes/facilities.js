@@ -23,7 +23,7 @@ router.post("/create", async (req, res) => {
         pin_code: req.body.pin_code,
         country: req.body.country,
         state: req.body.state,
-        latitude_Lognitude: req.body.latitude_Lognitude,
+        latitude_lognitude: req.body.latitude_lognitude,
         aminities_id: req.body.aminities_id,
         equipments_id: req.body.equipments_id,
         facility_timing: req.body.facility_timing,
