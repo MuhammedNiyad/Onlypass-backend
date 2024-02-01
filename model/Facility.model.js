@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const facilitySchema = new mongoose.Schema(
+const facilitySchema = new Schema(
   {
     user_role: {
       type: String,
@@ -41,7 +41,7 @@ const facilitySchema = new mongoose.Schema(
       //contact person_phone_number...!
       type: String,
       required: true,
-      // unique: true,
+      unique: true,
     },
     websiteURL: {
       type: String,
@@ -102,18 +102,21 @@ const facilitySchema = new mongoose.Schema(
       },
     ],
     admission_fee: {
-      type: String,
+      type: Number,
     },
     amount_per_day: {
       type: Number,
     },
     daily_pass: {
-      type: Boolean,
+      type:Number,
     },
-    three_month_pass: {
+    monthly_pass: {
       type: Number,
     },
-    six_month_pass: {
+    threeMonth_pass: {
+      type: Number,
+    },
+    sixMonth_pass: {
       type: Number,
     },
     annual_pass: {
@@ -128,7 +131,6 @@ const facilitySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 const Facilities = mongoose.model("Facilities", facilitySchema);
 
