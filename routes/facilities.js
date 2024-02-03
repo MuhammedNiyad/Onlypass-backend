@@ -24,7 +24,7 @@ router.post("/create", async (req, res) => {
         place: req.body.place,
         country: req.body.country,
         state: req.body.state,
-        latitude_lognitude: req.body.latitude_lognitude,
+        latitude_longitude: req.body.latitude_longitude,
         aminities_id: req.body.aminities_id,
         equipments_id: req.body.equipments_id,
         facility_timing: req.body.facility_timing,

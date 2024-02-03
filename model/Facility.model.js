@@ -70,7 +70,7 @@ const facilitySchema = new Schema(
     state: {
       type: String,
     },
-    latitude_lognitude: {
+    latitude_longitude: {
       type: String,
     },
     aminities_id: {
