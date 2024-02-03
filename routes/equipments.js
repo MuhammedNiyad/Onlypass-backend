@@ -28,8 +28,8 @@ router.post('/create-equipments', uploadImg.single('image'), async (req, res)=>{
             image:req.file.filename
         });
 
-        // await newEquipment.save();
-        // res.status(200).json(newEquipment);
+        await newEquipment.save();
+        res.status(200).json(newEquipment);
 
     } catch (error) {
         res.status(500).json({message:error.message});

@@ -61,6 +61,9 @@ const facilitySchema = new Schema(
     pin_code: {
       type: Number,
     },
+    place: {
+      type: String,
+    },
     country: {
       type: String,
     },
