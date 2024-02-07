@@ -70,9 +70,17 @@ const facilitySchema = new Schema(
     latitude_longitude: {
       type: String,
     },
-    aminities_id: {
-      type: Array,
-    },
+    amenities: [
+      {
+        amenities_id:{
+          type: String,
+        },
+        isPaid:{
+          type:String,
+          // default: false,
+        }
+      }
+    ],
     equipments_id: {
       type: Array,
     },
