@@ -17,7 +17,7 @@ router.post("/create", async (req, res) => {
         phoneNumber: req.body.phoneNumber,
         websiteURL: req.body.websiteURL,
         logoUrl: req.body.logoUrl,
-        descreption: req.body.description,
+        description: req.body.description,
         images: req.body.images,
         address: req.body.address,
         pin_code: req.body.pin_code,
@@ -25,7 +25,7 @@ router.post("/create", async (req, res) => {
         state: req.body.state,
         latitude_longitude: req.body.latitude_longitude,
         amenities: req.body.amenities,
-        equipments_id: req.body.equipments_id,
+        equipments: req.body.equipments,
         facility_timing: req.body.facility_timing,
         admission_fee: req.body.admission_fee,
         amountPer_day: req.body.amountPer_day,
@@ -50,22 +50,14 @@ router.post("/create", async (req, res) => {
 // UPDATE FECILITIES.......!
 router.put("/update/:id", async (req, res) => {
   try {
-    const update = req.file.gym_logo
-      ? {
-          ...req.body,
-          gym_logo: req.file.filename,
-        }
-      : {
-          ...req.body,
-        };
-    const updatedFacilities = await Facilities.findByIdAndUpdate(
+    const updatedFacility = await Facilities.findByIdAndUpdate(
       req.params.id,
       {
-        $set: update,
+        $set: req.body,
       },
       { new: true }
     );
-    res.status(200).json(updatedFacilities);
+    res.status(200).json(updatedFacility);
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);
@@ -84,6 +76,8 @@ router.delete("/remove/:id", async (req, res) => {
 
 // GET FECILITIES.....!
 router.get("/:id", async (req, res) => {
+  // console.log("id", req.params.id);
+  
   try {
     const facilities = await Facilities.findById(req.params.id);
     res.status(200).json(facilities);

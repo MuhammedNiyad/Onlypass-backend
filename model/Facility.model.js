@@ -72,7 +72,7 @@ const facilitySchema = new Schema(
     },
     amenities: [
       {
-        amenities_id:{
+        amenities_name:{
           type: String,
         },
         isPaid:{
@@ -81,9 +81,19 @@ const facilitySchema = new Schema(
         }
       }
     ],
-    equipments_id: {
-      type: Array,
-    },
+    equipments: [
+      {
+        equipments_id:{
+          type:String,
+        },
+        equipment_name:{
+          type:String,
+        },
+        equipment_img:{
+          type:String,
+        }
+      }
+    ],
     facility_timing: [
       {
         Monday: {

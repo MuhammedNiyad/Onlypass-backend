@@ -63,6 +63,15 @@ router.delete('/delete-equipment/:id', async (req, res)=>{
     }
 });
 
+//GET EQUIPMENT BY ID........!
+router.get('/one/:id', async (req, res) => {
+    try {
+        const equipment = await Equipment.findById(req.params.id);
+        res.status(200).json(equipment);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+});
 
 //GET ALL EQUIPMENT.........!
 

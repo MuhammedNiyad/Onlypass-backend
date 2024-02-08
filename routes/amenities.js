@@ -26,6 +26,8 @@ router.delete('remove/:id', async (req, res)=>{
     }
 })
 
+//
+
 
 // GET ALL AMENITIES.......!
 
