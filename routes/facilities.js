@@ -26,7 +26,7 @@ router.post("/create", async (req, res) => {
         latitude_longitude: req.body.latitude_longitude,
         amenities: req.body.amenities,
         equipments: req.body.equipments,
-        facility_timing: req.body.facility_timing,
+        facilityTiming: req.body.facilityTiming,
         admission_fee: req.body.admission_fee,
         amountPer_day: req.body.amountPer_day,
         daily_pass: req.body.daily_pass,

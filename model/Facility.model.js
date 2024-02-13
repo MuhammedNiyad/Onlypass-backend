@@ -94,30 +94,45 @@ const facilitySchema = new Schema(
         }
       }
     ],
-    facility_timing: [
-      {
-        Monday: {
-          type: Object,
-        },
-        Tuesday: {
-          type: Object,
-        },
-        Wednesday: {
-          type: Object,
-        },
-        Thursday: {
-          type: Object,
-        },
-        Friday: {
-          type: Object,
-        },
-        Saturday: {
-          type: Object,
-        },
-        Sunday: {
-          type: Object,
-        },
+    facilityTiming: [
+   {
+    day:{
+      type:String,
+      required:true,
+    },
+    morning:{
+      start:{
+        type:String,
+        required:true,
       },
+      end:{
+        type:String,
+        required:true,
+      },
+      holiday:{
+        type:Boolean,
+        required:true,
+      },
+    },
+    evening:{
+      start:{
+        type:String,
+        required:true,
+      },
+      end:{
+        type:String,
+        required:true,
+      },
+      holiday:{
+        type:Boolean,
+        required:true,
+      }
+    },
+    // fullDay:{
+    //   type:Boolean,
+    //   required:true,
+    // }
+   }
     ],
     admission_fee: {
       type: Number,
