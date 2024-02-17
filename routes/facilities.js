@@ -58,6 +58,7 @@ router.put("/update/:id", async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedFacility);
+    console.log("update", updatedFacility);
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);

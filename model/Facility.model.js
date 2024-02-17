@@ -98,40 +98,36 @@ const facilitySchema = new Schema(
    {
     day:{
       type:String,
-      required:true,
+      // required:true,
     },
     morning:{
       start:{
         type:String,
-        required:true,
+        // required:true,
       },
       end:{
         type:String,
-        required:true,
+        // required:true,
       },
       holiday:{
         type:Boolean,
-        required:true,
+        // required:true,
       },
     },
     evening:{
       start:{
         type:String,
-        required:true,
+        // required:true,
       },
       end:{
         type:String,
-        required:true,
+        // required:true,
       },
       holiday:{
         type:Boolean,
-        required:true,
+        // required:true,
       }
     },
-    // fullDay:{
-    //   type:Boolean,
-    //   required:true,
-    // }
    }
     ],
     admission_fee: {

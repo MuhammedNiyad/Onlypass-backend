@@ -18,10 +18,14 @@ router.post('/create', async(req, res)=>{
 
 // DELETE AMENITITES..........!
 
-router.delete('remove/:id', async (req, res)=>{
+router.delete('/remove/:id', async (req, res)=>{
+    // console.log("Ame id:", req.params.id);
     try {
         await Amenities.findByIdAndDelete(req.params.id)    //delete Amenities from database...!
+        res.status(200).json({message:"Amenities deleted successfully"});
     } catch (error) {
+        console.log('error',error)
+        
         res.status(500),json({message: error.message});
     }
 })
