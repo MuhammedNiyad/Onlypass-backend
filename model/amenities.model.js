@@ -9,6 +9,10 @@ const amenitiesSchame = new mongoose.Schema({
     available:{
         type:Boolean,
         default:true,
+    },
+    icon:{
+        type:String,
+        required:true,
     }
 },{timestamps:true})
 

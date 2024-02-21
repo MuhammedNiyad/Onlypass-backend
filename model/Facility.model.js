@@ -78,6 +78,9 @@ const facilitySchema = new Schema(
         isPaid:{
           type:String,
           // default: false,
+        },
+        iconUrl:{
+          type:String,
         }
       }
     ],

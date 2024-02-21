@@ -1,20 +1,53 @@
 const express = require('express');
 const Amenities = require('../model/amenities.model');
 const router = express.Router();
+const path = require('path');
+const multer = require('multer');
 
+//setting multer for equipments image........!
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'Upload/amenitiesIcon')
+    },
+
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+});
+
+const uploadImg = multer({ storage:storage});
 
 // CREATE AMENITIES.........!
 
-router.post('/create', async(req, res)=>{
+router.post('/create', uploadImg.single('icon'), async(req, res)=>{
+    console.log();
     try {
-        const newAmenities = new Amenities(req.body);
+        const newAmenities = new Amenities({
+            name: req.body.name,
+            icon: req.file.filename
+        });
         await newAmenities.save();   
-        console.log("new amenity added: ",newAmenities);                    //save Amenities to database.......!
+        console.log("new amenity added: ",newAmenities);    //save Amenities to database.......!
         res.status(200).json(newAmenities);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
+});// UPDATE EQUIPMENT........!
+
+router.put('/update-amenities', async (req, res)=>{
+    try {
+        const update = req.file ? {
+            ...req.body,
+            image: req.file.filename
+        } : {
+            ...req.body,
+        }
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
 });
+
+
 
 // DELETE AMENITITES..........!
 
@@ -43,6 +76,14 @@ router.get('/', async (req, res)=>{
     } catch (error) {
         res.status(500).json({message: error.message});
     }
+});
+
+// GET IMAGES.....
+router.get(`/icon/:iconName`, (req, res) => {
+    const imageName = req.params.iconName; // Retrieve the image name from the URL parameter
+    const imagesFolder = path.join(__dirname, "../Upload", "amenitiesIcon"); // Define the folder where images are stored
+    const imagePath = path.join(imagesFolder, imageName); // Construct the full image path
+    res.sendFile(imagePath); // Send the image file as a response
 });
 
 

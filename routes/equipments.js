@@ -22,7 +22,7 @@ const uploadImg = multer({ storage:storage});
 
 router.post('/create-equipments', uploadImg.single('image'), async (req, res)=>{
     try {
-        console.log("reqbody:", req.body);
+        // console.log("reqbody:", req.body);
         const newEquipment = new Equipment({
             name: req.body.name,
             image:req.file.filename
