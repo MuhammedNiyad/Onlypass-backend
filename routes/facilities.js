@@ -88,6 +88,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // GET ALL FECILITIES......!
+
 router.get("/", async (req, res) => {
   try {
     const facilities = await Facilities.find();

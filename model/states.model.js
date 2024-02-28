@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const statesSchema = new mongoose.Schema({
 
-    // what give here...........!Think...
+    // what will give here...........!Think...
 
 },{timestamps: true})
 

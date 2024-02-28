@@ -32,7 +32,9 @@ router.post('/create', uploadImg.single('icon'), async(req, res)=>{
     } catch (error) {
         res.status(500).json({message: error.message});
     }
-});// UPDATE EQUIPMENT........!
+});
+
+// UPDATE EQUIPMENT........!
 
 router.put('/update-amenities', async (req, res)=>{
     try {
