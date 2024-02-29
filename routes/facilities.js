@@ -49,6 +49,7 @@ router.post("/create", async (req, res) => {
 
 // UPDATE FECILITIES.......!
 router.put("/update/:id", async (req, res) => {
+  console.log("before update>>>>>>>>>>>>>>>>>",req.body);
   try {
     const updatedFacility = await Facilities.findByIdAndUpdate(
       req.params.id,
@@ -58,7 +59,7 @@ router.put("/update/:id", async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedFacility);
-    console.log("update", updatedFacility);
+    console.log("<<<<<<<updated>>>>>>>>>>>>>", updatedFacility);
   } catch (error) {
     console.log(error.message);
     res.status(500).json(error.message);
