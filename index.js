@@ -18,6 +18,7 @@ app.use("/api/country", require("./routes/country"));
 app.use("/api/tier", require("./routes/tier"));
 app.use("/api/membership", require("./routes/memberShip"));
 app.use("/api/facility-type", require("./routes/facility_type"));
+app.use("/api/customer/" , require("./routes/CustomerRoutes/customer"));
 
 mongoose
   .connect(process.env.MONGO_URL)
