@@ -3,19 +3,20 @@ const mongoose = require("mongoose");
 const activeMembershipSchema = new mongoose.Schema(
   {
     customers_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Customer", 
+      unique: true,
     },
     membership_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MemberShip",
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "MembershipPlans",
     },
     startDate: {
-      type: String,
+      type: Date,
     },
     endDate: {
-      type: String,
-    },
+      type: Date,
+    },    
   },
   { timestamps: true }
 );

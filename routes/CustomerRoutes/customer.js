@@ -2,11 +2,31 @@ const express = require("express");
 const Customer = require("../../model/customerModel/customer.model");
 const router = express.Router();
 
-
 // Create a new customer
 router.post("/create", async (req, res) => {
   try {
-    const newCustomer = new Customer(req.body);
+    let profile = null;
+    if (req.file) {
+      profile = req.file.filename;
+    }
+
+    const newCustomer = new Customer({
+      phoneNumber: req.body.phoneNumber,
+      countryId: req.body.countryId,
+      gender: req.body.gender,
+      name: req.body.name,
+      email: req.body.email,
+      profilePic: profile,
+      height: req.body.height,
+      weight: req.body.weight,
+      address: req.body.address,
+      referrel_code: req.body.referrel_code,
+      clubPoints: req.body.clubPoints,
+      clubLevel: req.body.clubLevel,
+      activeMembership: req.body.activeMembership,
+      upcomingMembership: req.body.upcomingMembership,
+      membershipHistory: req.body.membershipHistory,
+    });
     await newCustomer.save();
     res.status(201).json(newCustomer);
   } catch (error) {
@@ -15,9 +35,11 @@ router.post("/create", async (req, res) => {
 });
 
 // Update a customer by ID
-router.put("/:id", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
-    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const customer = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.json(customer);
   } catch (error) {
     res.status(400).json({ message: error.message });

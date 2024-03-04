@@ -33,7 +33,7 @@ const customerSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-    referrel: {
+    referrel_code: {
       type: String,
     },
     clubPoints: {

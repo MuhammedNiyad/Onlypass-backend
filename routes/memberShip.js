@@ -1,42 +1,46 @@
 const express = require("express");
-const MemberShip = require("../model/membership.model");
-const MembershipDetails = require("../model/membershipDetails.model");
+const MemberShipPackage = require("../model/membership.model");
+const MembershipPlans = require("../model/membershipPlans.model");
 const router = express.Router();
+const path = require("path");
+const multer = require("multer");
 
-// CREATE MEMBERSHIP........!
+// CREATE MEMBERSHIP Package........!
 
-router.post("/create", async (req, res) => {
+router.post("/package/create", async (req, res) => {
   console.log("memberShip:", req.body);
   try {
-    const newMembership = new MemberShip({
+    const newMembershipPackage = new MemberShipPackage({
       name: req.body.name,
       tier_id: req.body.tier_id,
-      isListerForApp: req.body.isListerForApp,
+      category: req.body.category,
+      description: req.body.description,
+      status: req.body.status,
       effectiveAmount: req.body.effectiveAmount,
       originalPrice: req.body.originalPrice,
     });
-    await newMembership.save();
-    console.log("new membership created: ", newMembership);
-    res.status(200).json(newMembership);
+    await newMembershipPackage.save();
+    console.log("new membership created: ", newMembershipPackage);
+    res.status(200).json(newMembershipPackage);
   } catch (error) {
     res.status(500).json({ message: error.message });
     console.log({ message: error.message });
   }
 });
 
-// UPDATA MEMBERSHIP.....!
+// UPDATA MEMBERSHIP Package.....!
 
-router.put("/update-membership/:id", async (req, res) => {
+router.put("/update-package/:id", async (req, res) => {
   try {
-    const updatedMembership = await MemberShip.findByIdAndUpdate(
+    const updatedMembershipPackage = await MemberShipPackage.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
       },
       { new: true }
     );
-    res.status(200).json(updatedMembership);
-    console.log("update", updatedMembership);
+    res.status(200).json(updatedMembershipPackage);
+    console.log("update", updatedMembershipPackage);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -45,7 +49,7 @@ router.put("/update-membership/:id", async (req, res) => {
 // DELETE MEMBERSHIP...........!
 router.delete("/remove/:id", async (req, res) => {
   try {
-    await MemberShip.findByIdAndDelete(req.params.id);
+    await MemberShipPackage.findByIdAndDelete(req.params.id);
     res.status(200).json("Membership deleted");
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -54,79 +58,116 @@ router.delete("/remove/:id", async (req, res) => {
 
 // GET ALL MEMBERSHIP........!
 
-router.get("/all", async (req, res) => {
+router.get("/package/all", async (req, res) => {
   try {
-    const membership = await MemberShip.find();
-    if (membership.length ===0 ) {
+    const membership = await MemberShipPackage.find();
+    if (membership.length === 0) {
       res.status(404).json({ message: "There are no memberships" });
-    }else{
-        res.status(200).json(membership);
+    } else {
+      res.status(200).json(membership);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
+//FOR MEMBERSHIP PLANS...........!
 
-//FOR MEMBERSHIPDETAILS...........!
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "Upload/membershipPlansImg");
+  },
 
-router.post('/membership-details/create', async (req, res)=>{
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const uploadImg = multer({ storage: storage });
+
+router.post(
+  "/membership-plans/create",
+  uploadImg.single("image"),
+  async (req, res) => {
     console.log(req.body);
     // return;
     try {
-        const newMembershipDetails = new MembershipDetails({
-            membership_id: req.body.membership_id,
-            no_of_days: req.body.no_of_days,
-            no_of_access: req.body.no_of_access,
-            per_day_access: req.body.per_day_access,
-            per_day_amount: req.body.per_day_amount,
-        });
-        await newMembershipDetails.save();
-        res.status(200).json(newMembershipDetails);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+      let imageFileName = null; // Initialize imageFileName variable
+      if (req.file) {
+        // Check if file was uploaded
+        imageFileName = req.file.filename; // If yes, assign the filename
+      }
 
-// UPDATE MEMBERSHIP DETAILS..........!
-router.put('/membership-details/update/:id', async (req, res) => {
-    try {
-        const updatedDetails = await MemberShipDetails.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set:req.body,
-            },
-            {new: true}
-        );
-        res.status(200).json(updatedDetails);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// DELETE MEMBERSHIP DETAILS...........!
-router.delete("/membership-details/remove/:id", async (req, res) => {
-    try {
-      await MembershipDetails.findByIdAndDelete(req.params.id);
-      res.status(200).json("Membership details deleted");
+      const newMembershipPlans = new MembershipPlans({
+        membership_id: req.body.membership_id,
+        name: req.body.name,
+        status: req.body.status,
+        no_of_days: req.body.no_of_days,
+        no_of_access: req.body.no_of_access,
+        per_day_access: req.body.per_day_access,
+        description: req.body.description,
+        feature: req.body.feature,
+        amount: req.body.amount,
+        offer_amount: req.body.offer_amount,
+        help_text: req.body.help_text,
+        image: imageFileName,
+      });
+      await newMembershipPlans.save();
+      res.status(200).json(newMembershipPlans);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  });
+  }
+);
 
-// GET ALL MEMBERSHIP DETAILS.....!
+// UPDATE MEMBERSHIP PLANS..........!
+router.put("/membership-plans/update/:id", async (req, res) => {
+  try {
+    const updatedPlans = await MembershipPlans.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPlans);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-router.get('/membership-detail/all', async (req, res) =>{
-    try {
-        const membershipDetails = await MembershipDetails.find().populate('membership_id');
-        if (!membershipDetails || membershipDetails.length === 0) {
-          return res.status(404).json({ message: "No membership details found" });
-        }
-        res.status(200).json(membershipDetails);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-})
+// DELETE MEMBERSHIP PLANS...........!
+router.delete("/membership-plans/remove/:id", async (req, res) => {
+  try {
+    await MembershipPlans.findByIdAndDelete(req.params.id);
+    res.status(200).json("Membership plans deleted");
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
+// GET ALL MEMBERSHIP PLANS.....!
+
+router.get("/membership-plans/all", async (req, res) => {
+  try {
+    const membershipPlans = await MembershipPlans.find().populate(
+      "membership_id"
+    );
+    if (!membershipPlans || membershipPlans.length === 0) {
+      return res.status(404).json({ message: "No membership plans found" });
+    }
+    res.status(200).json(membershipPlans);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET PLANS IMAGES.....
+router.get(`/plans/:imageUrl`, (req, res) => {
+  const imageName = req.params.imageUrl; // Retrieve the image name from the URL parameter
+  const imagesFolder = path.join(__dirname, "../Upload", "membershipPlansImg"); // Define the folder where images are stored
+  const imagePath = path.join(imagesFolder, imageName); // Construct the full image path
+  res.sendFile(imagePath); // Send the image file as a response
+});
 
 module.exports = router;

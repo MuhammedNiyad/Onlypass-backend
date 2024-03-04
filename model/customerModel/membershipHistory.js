@@ -8,7 +8,7 @@ const MembershipHistorySchema = new mongoose.Schema(
     },
     membership_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "MemberShip",
+      ref: "MembershipPlans",
     },
     startDate: {
       type: String,

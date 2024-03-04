@@ -9,8 +9,14 @@ const membershipSchema = new mongoose.Schema(
     tier_id: {
       type: String,
     },
-    isListedForApp: {
-      type: Boolean,
+    category: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    status:{
+      type:Boolean,
     },
     effectiveAmount: {
       type: Number,
