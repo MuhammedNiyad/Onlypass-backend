@@ -24,7 +24,9 @@ router.post('/create', uploadImg.single('icon'), async(req, res)=>{
     try {
         const newAmenities = new Amenities({
             name: req.body.name,
-            icon: req.file.filename
+            icon: req.file.filename,
+            description: req.body.description,
+            status: req.body.status,
         });
         await newAmenities.save();   
         console.log("new amenity added: ",newAmenities);    //save Amenities to database.......!
@@ -44,6 +46,7 @@ router.put('/update-amenities', async (req, res)=>{
         } : {
             ...req.body,
         }
+        res.status(200).json(update);
     } catch (error) {
         res.status(500).json({message:error.message});
     }

@@ -25,7 +25,7 @@ const membershipPlansSchema = new mongoose.Schema(
     help_text:{
       type: String,
     },
-    image:{
+    bg_image:{
       type: String,
     },
   },

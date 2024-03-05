@@ -23,6 +23,7 @@ router.post("/create", async (req, res) => {
       referrel_code: req.body.referrel_code,
       clubPoints: req.body.clubPoints,
       clubLevel: req.body.clubLevel,
+      is_offline: req.body.is_offline,
       activeMembership: req.body.activeMembership,
       upcomingMembership: req.body.upcomingMembership,
       membershipHistory: req.body.membershipHistory,
@@ -61,7 +62,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Get all customers
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const customers = await Customer.find();
     res.json(customers);

@@ -3,13 +3,12 @@ const ActiveMembership = require("../../model/customerModel/activeMembership");
 const MembershipPlans = require("../../model/membershipPlans.model");
 const router = express.Router();
 
-
 // This is for calculate end time
 function calculateEndDate(startDate, validityDuration) {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + validityDuration);
     return endDate.toISOString();
-  }  
+  };  
 
 // Create ActiveMembership
 router.post("/create", async (req, res) => {
@@ -19,7 +18,7 @@ router.post("/create", async (req, res) => {
     const startDate = new Date();
     const endDate = calculateEndDate(startDate, membershipValidity);
     // console.log("memberhsip plans: ", membershipValidity,startDate,endDate);
-    
+
     // return 
     const activeMembership = await ActiveMembership.create({
         customers_id:req.body.customers_id,

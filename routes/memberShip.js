@@ -5,19 +5,44 @@ const router = express.Router();
 const path = require("path");
 const multer = require("multer");
 
+
+// FOR BG_IMAGES UPLOAD
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "Upload/membershipPlansImg");
+  },
+
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const uploadImg = multer({ storage: storage });
+
 // CREATE MEMBERSHIP Package........!
 
-router.post("/package/create", async (req, res) => {
+router.post("/package/create", uploadImg.single("bg_image"), async (req, res) => {
   console.log("memberShip:", req.body);
   try {
+
+    let imageFileName = null; // Initialize imageFileName variable
+      if (req.file) {
+        // Check if file was uploaded
+        imageFileName = req.file.filename; // If yes, assign the filename
+      }
+
     const newMembershipPackage = new MemberShipPackage({
       name: req.body.name,
+      slogan_txt: req.body.slogan_txt,
       tier_id: req.body.tier_id,
       category: req.body.category,
       description: req.body.description,
+      link_txt: req.body.link_txt,
+      link_url:req.body.link_url,
       status: req.body.status,
       effectiveAmount: req.body.effectiveAmount,
       originalPrice: req.body.originalPrice,
+      bg_image:imageFileName,
     });
     await newMembershipPackage.save();
     console.log("new membership created: ", newMembershipPackage);
@@ -73,21 +98,9 @@ router.get("/package/all", async (req, res) => {
 
 //FOR MEMBERSHIP PLANS...........!
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "Upload/membershipPlansImg");
-  },
-
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
-const uploadImg = multer({ storage: storage });
-
 router.post(
   "/membership-plans/create",
-  uploadImg.single("image"),
+  uploadImg.single("bg_image"),
   async (req, res) => {
     console.log(req.body);
     // return;
@@ -110,7 +123,7 @@ router.post(
         amount: req.body.amount,
         offer_amount: req.body.offer_amount,
         help_text: req.body.help_text,
-        image: imageFileName,
+        bg_image: imageFileName,
       });
       await newMembershipPlans.save();
       res.status(200).json(newMembershipPlans);

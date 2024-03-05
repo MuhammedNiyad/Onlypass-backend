@@ -42,6 +42,10 @@ const customerSchema = new mongoose.Schema(
     clubLevel: {
       type: Number,
     },
+    is_offline:{
+      type: Boolean,
+      required: true,
+    },
     activeMembership: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ActiveMembership",

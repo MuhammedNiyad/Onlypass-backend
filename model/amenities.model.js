@@ -6,13 +6,16 @@ const amenitiesSchame = new mongoose.Schema({
         type:String,
         required: true,
     },
-    available:{
+    status:{
         type:Boolean,
         default:true,
     },
     icon:{
         type:String,
         required:true,
+    },
+    description:{
+        type:String,
     }
 },{timestamps:true})
 
