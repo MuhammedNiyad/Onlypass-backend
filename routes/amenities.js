@@ -38,14 +38,15 @@ router.post('/create', uploadImg.single('icon'), async(req, res)=>{
 
 // UPDATE EQUIPMENT........!
 
-router.put('/update-amenities', async (req, res)=>{
+router.put('/update-amenities/:id', uploadImg.single('icon'), async (req, res)=>{
+    console.log("update data: ", req.body);
     try {
-        const update = req.file ? {
+        const update = await Amenities.findByIdAndUpdate( req.params.id, req.file ? {
             ...req.body,
-            image: req.file.filename
+            icon: req.file.filename
         } : {
             ...req.body,
-        }
+        },{new: true});
         res.status(200).json(update);
     } catch (error) {
         res.status(500).json({message:error.message});

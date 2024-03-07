@@ -24,9 +24,6 @@ router.post("/create", async (req, res) => {
       clubPoints: req.body.clubPoints,
       clubLevel: req.body.clubLevel,
       is_offline: req.body.is_offline,
-      activeMembership: req.body.activeMembership,
-      upcomingMembership: req.body.upcomingMembership,
-      membershipHistory: req.body.membershipHistory,
     });
     await newCustomer.save();
     res.status(201).json(newCustomer);
@@ -50,9 +47,9 @@ router.put("/update/:id", async (req, res) => {
 // Get a customer by ID
 router.get("/:id", async (req, res) => {
   try {
-    const customer = await Customer.findById(req.params.id);
+    const customer = await Customer.findById(req.params.id).populate('activeMembership').populate('upcomingMemberships').populate('membershipHistory');
     if (customer) {
-      res.json(customer);
+      res.status(200).json(customer);
     } else {
       res.status(404).json({ message: "Customer not found" });
     }

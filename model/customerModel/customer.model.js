@@ -46,18 +46,18 @@ const customerSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    activeMembership: {
+    activeMembership: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "ActiveMembership",
-    },
-    upcomingMembership: {
+    }],
+    upcomingMemberships: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "UpcomingMembership",
-    },
-    membershipHistory: {
+    }],
+    membershipHistory: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "MembershipHistory",
-    },
+    }],
   },
   { timestamps: true }
 );

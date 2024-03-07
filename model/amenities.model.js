@@ -12,7 +12,7 @@ const amenitiesSchame = new mongoose.Schema({
     },
     icon:{
         type:String,
-        required:true,
+        // required:true,
     },
     description:{
         type:String,
