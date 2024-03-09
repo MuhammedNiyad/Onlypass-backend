@@ -26,6 +26,10 @@ const membershipSchema = new mongoose.Schema(
     },
     status:{
       type:Boolean,
+      default: true,
+    },
+    priceTag_txt:{
+      type: String,
     },
     effectiveAmount: {
       type: Number,

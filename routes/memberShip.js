@@ -40,6 +40,7 @@ router.post("/package/create", uploadImg.single("bg_image"), async (req, res) =>
       link_txt: req.body.link_txt,
       link_url:req.body.link_url,
       status: req.body.status,
+      priceTag_txt:req.body.priceTag_txt,
       effectiveAmount: req.body.effectiveAmount,
       originalPrice: req.body.originalPrice,
       bg_image:imageFileName,
@@ -55,14 +56,16 @@ router.post("/package/create", uploadImg.single("bg_image"), async (req, res) =>
 
 // UPDATA MEMBERSHIP Package.....!
 
-router.put("/update-package/:id", async (req, res) => {
+router.put("/package/update/:id", uploadImg.single("bg_image"), async (req, res) => {
+  console.log(">>>>>>",req.body);
   try {
     const updatedMembershipPackage = await MemberShipPackage.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
+      req.params.id, req.file ? {
+        ...req.body,
+        bg_image: req.file.filename
+      } : {
+        ...req.body,
+      },{new: true}
     );
     res.status(200).json(updatedMembershipPackage);
     console.log("update", updatedMembershipPackage);
@@ -81,15 +84,26 @@ router.delete("/remove/:id", async (req, res) => {
   }
 });
 
+// GET BY ID...........!
+router.get("/package/one/:id", async (req, res)=>{
+  try {
+    package = await Package.findById(req.params.id);
+;
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
 // GET ALL MEMBERSHIP........!
 
 router.get("/package/all", async (req, res) => {
   try {
     const membership = await MemberShipPackage.find();
+    const plans = await MembershipPlans.find();
     if (membership.length === 0) {
       res.status(404).json({ message: "There are no memberships" });
     } else {
-      res.status(200).json(membership);
+      res.status(200).json({Membership:membership,Plans:plans});
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -134,14 +148,15 @@ router.post(
 );
 
 // UPDATE MEMBERSHIP PLANS..........!
-router.put("/membership-plans/update/:id", async (req, res) => {
+router.put("/membership-plans/update/:id", uploadImg.single("bg_image"), async (req, res) => {
   try {
     const updatedPlans = await MembershipPlans.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
+      req.params.id, req.file ? {
+        ...req.body,
+        icon: req.file.filename
+    } : {
+        ...req.body,
+    },{new: true}
     );
     res.status(200).json(updatedPlans);
   } catch (error) {
@@ -158,6 +173,17 @@ router.delete("/membership-plans/remove/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+//  GET BY PACKAGE ID..............!
+router.get("/package/plans/:id", async (req, res) => {
+  try {
+     const plans = await MembershipPlans.find({ membership_id: req.params.id }).populate("membership_id");
+     console.log(plans);
+     res.status(200).json(plans);
+  } catch (error) {
+     res.status(500).json({ message: error.message });
+  }
+ });
 
 // GET ALL MEMBERSHIP PLANS.....!
 
