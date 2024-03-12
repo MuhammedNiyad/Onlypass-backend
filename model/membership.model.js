@@ -28,7 +28,7 @@ const membershipSchema = new mongoose.Schema(
       type:Boolean,
       default: true,
     },
-    priceTag_txt:{
+    PriceTag_txt:{
       type: String,
     },
     effectiveAmount: {

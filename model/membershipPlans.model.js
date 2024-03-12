@@ -9,6 +9,10 @@ const membershipPlansSchema = new mongoose.Schema(
     status: {
       type: Boolean,
     },
+    pause:{
+      type: Boolean,
+      default: false,
+    },
     no_of_days: { type: Number },
     no_of_access: { type: Number },
     per_day_access: { type: Number },
