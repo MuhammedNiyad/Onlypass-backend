@@ -30,10 +30,16 @@ const customerSchema = new mongoose.Schema(
     weight: {
       type: String,
     },
+    date_of_birth:{
+      type: String,
+    },
     address: {
       type: String,
     },
-    referrel_code: {
+    referral_code: {
+      type: String,
+    },
+    referred_by: {
       type: String,
     },
     clubPoints: {
@@ -42,22 +48,44 @@ const customerSchema = new mongoose.Schema(
     clubLevel: {
       type: Number,
     },
-    is_offline:{
-      type: Boolean,
-      required: true,
+    customer_type: {
+      type: String,
+      required: "OnlyPass",
     },
-    activeMembership: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ActiveMembership",
-    }],
-    upcomingMemberships: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "UpcomingMembership",
-    }],
-    membershipHistory: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MembershipHistory",
-    }],
+    activeMembership: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ActiveMembership",
+      },
+    ],
+    upcomingMemberships: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UpcomingMembership",
+      },
+    ],
+    membershipHistory: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "MembershipHistory",
+      },
+    ],
+    emergencyContactName: {
+      type: String,
+    },
+    emergencyContactNumber: {
+      type: String,
+    },
+    deviceName: {
+      type: String,
+    },
+    // permissions: [
+    //   {type:mongoose.Schema.Types.ObjectId,
+    //   ref:""}
+    // ],
+    accountUsing:{
+      type:Array,
+    }
   },
   { timestamps: true }
 );

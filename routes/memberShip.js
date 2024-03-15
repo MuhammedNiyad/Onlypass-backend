@@ -68,10 +68,12 @@ router.put(
         await MemberShipPackage.findByIdAndUpdate(
           req.params.id,
           req.file
-            ? {
-                ...req.body,
-                bg_image: req.file.filename,
-              }
+            ? req.file === ""
+              ? { ...req.body }
+              : {
+                  ...req.body,
+                  bg_image: req.file.filename,
+                }
             : {
                 ...req.body,
               },
@@ -167,24 +169,35 @@ router.put(
     console.log(req.body);
 
     try {
+      let status = false; // Default status
+      if (req.body.status === "enable") {
+        status = true;
+      } else if (req.body.status === "disable") {
+        status = false;
+      }
+      const updatedData = req.file
+        ? {
+            ...req.body,
+            status: status,
+            bg_image: req.file.filename,
+          }
+        : {
+            ...req.body,
+            status: status,
+          };
       const updatedPlans = await MembershipPlans.findByIdAndUpdate(
         req.params.id,
-        req.file
-          ? {
-              ...req.body,
-              icon: req.file.filename,
-            }
-          : {
-              ...req.body,
-            },
+        updatedData,
         { new: true }
       );
       res.status(200).json(updatedPlans);
+      console.log("plans update >>> :", updatedPlans);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
 );
+
 
 // DELETE MEMBERSHIP PLANS...........!
 router.delete("/membership-plans/remove/:id", async (req, res) => {

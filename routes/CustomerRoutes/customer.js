@@ -2,13 +2,26 @@ const express = require("express");
 const Customer = require("../../model/customerModel/customer.model");
 const router = express.Router();
 
+// 
+function generateReferralCode(length) {
+  const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+      result += characters[Math.floor(Math.random() * characters.length)];
+  }
+  return result;
+}
+
 // Create a new customer
 router.post("/create", async (req, res) => {
+  
   try {
     let profile = null;
     if (req.file) {
       profile = req.file.filename;
     }
+
+    const referralCode = generateReferralCode(6);
 
     const newCustomer = new Customer({
       phoneNumber: req.body.phoneNumber,
@@ -20,10 +33,13 @@ router.post("/create", async (req, res) => {
       height: req.body.height,
       weight: req.body.weight,
       address: req.body.address,
-      referrel_code: req.body.referrel_code,
+      referral_code: referralCode,
+      referred_by:req.body.referred_by,
       clubPoints: req.body.clubPoints,
       clubLevel: req.body.clubLevel,
       is_offline: req.body.is_offline,
+      emergencyContactName:req.body.emergencyContactName,
+      emergencyContactNumber: req.body.emergencyContactNumber,
     });
     await newCustomer.save();
     res.status(201).json(newCustomer);
@@ -45,7 +61,7 @@ router.put("/update/:id", async (req, res) => {
 });
 
 // Get a customer by ID
-router.get("/:id", async (req, res) => {
+router.get("/one/:id", async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.id).populate('activeMembership').populate('upcomingMemberships').populate('membershipHistory');
     if (customer) {
