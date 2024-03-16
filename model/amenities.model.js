@@ -13,6 +13,7 @@ const amenitiesSchame = new mongoose.Schema({
     icon:{
         type:String,
         // required:true,
+        default: 'https://www.beelights.gr/assets/images/empty-image.png'
     },
     description:{
         type:String,
