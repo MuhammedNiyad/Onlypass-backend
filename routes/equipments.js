@@ -21,11 +21,21 @@ const uploadImg = multer({ storage:storage});
 //CREATE EQUIPMENTS ........!
 
 router.post('/create-equipments', uploadImg.single('image'), async (req, res)=>{
+    console.log(">>>>>>>", req);
     try {
+        let imgUrl;
+    if (req.file && req.file.filename) {
+      imgUrl =
+        "http://192.168.1.16:5000/api/equipments/images/" + req.file.filename;
+    } else {
+      imgUrl = "https://www.beelights.gr/assets/images/empty-image.png";
+    }
         // console.log("reqbody:", req.body);
         const newEquipment = new Equipment({
             name: req.body.name,
-            image:req.file.filename
+            status: req.body.status,
+            description: req.body.description,
+            image:imgUrl,
         });
 
         await newEquipment.save();
