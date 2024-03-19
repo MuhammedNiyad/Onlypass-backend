@@ -50,27 +50,32 @@ router.put(
     "/update-amenities/:id",
     uploadImg.single("icon"),
     async (req, res) => {
-      console.log("update data: ", req.body);
-      const logoGetUrl = "http://192.168.1.16:5000/api/amenities/icon/";
+      console.log("update data: ", req.body,req.file);
       try {
-        let iconUrl = req.file && req.file.icon === '[object Object]' 
-            ? 'https://www.beelights.gr/assets/images/empty-image.png' 
-            : req.file
-                ? logoGetUrl + req.file.filename
-                : null;
-        const update = await Amenities.findByIdAndUpdate(
-          req.params.id,
-          iconUrl
-            ? {
-                ...req.body,
-                icon: iconUrl,
-              }
-            : {
-                ...req.body,
-              },
-          { new: true }
-        );
-        res.status(200).json(update);
+        let iconUrl;
+      if (req.file && req.file.filename) {
+        console.log(req.file.filename);
+        iconUrl =
+          "http://192.168.1.16:5000/api/amenities/icon/" + req.file.filename;
+          console.log("hello condition true");
+      } else {
+        iconUrl = "https://www.beelights.gr/assets/images/empty-image.png";
+        console.log("hiii condition false");
+      }
+    
+      const update = await Amenities.findByIdAndUpdate(
+        req.params.id,
+        req.file
+          ? {
+              ...req.body,
+              icon: iconUrl,
+            }
+          : {
+              ...req.body,
+            }
+      );
+      res.status(200).json(update);
+      console.log("updated amenity: ", update);
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
