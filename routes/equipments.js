@@ -28,7 +28,7 @@ router.post(
       let imgUrl;
       if (req.file && req.file.filename) {
         imgUrl =
-          "http://192.168.1.16:5000/api/equipments/images/" + req.file.filename;
+          `${req.protocol}://${req.get('host')}/api/equipments/images/` + req.file.filename;
       } else {
         imgUrl = "https://www.beelights.gr/assets/images/empty-image.png";
       }
@@ -61,7 +61,7 @@ router.put(
         let imgUrl;
       if (req.file && req.file.filename) {
         imgUrl =
-          "http://192.168.1.16:5000/api/equipments/images/" + req.file.filename;
+          `${req.protocol}://${req.get('host')}/api/equipments/images/` + req.file.filename;
       } else {
         imgUrl = "https://www.beelights.gr/assets/images/empty-image.png";
       }

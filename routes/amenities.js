@@ -25,7 +25,7 @@ router.post("/create", uploadImg.single("icon"), async (req, res) => {
     let iconUrl;
     if (req.file && req.file.filename) {
       iconUrl =
-        "http://192.168.1.16:5000/api/amenities/icon/" + req.file.filename;
+        `${req.protocol}://${req.get('host')}/api/amenities/icon/` + req.file.filename;
     } else {
       iconUrl = "https://www.beelights.gr/assets/images/empty-image.png";
     }
@@ -56,11 +56,11 @@ router.put(
       if (req.file && req.file.filename) {
         console.log(req.file.filename);
         iconUrl =
-          "http://192.168.1.16:5000/api/amenities/icon/" + req.file.filename;
-          console.log("hello condition true");
+          `${req.protocol}://${req.get('host')}/api/amenities/icon/` + req.file.filename;
+          // console.log("hello condition true");
       } else {
         iconUrl = "https://www.beelights.gr/assets/images/empty-image.png";
-        console.log("hiii condition false");
+        // console.log("hiii condition false");
       }
     
       const update = await Amenities.findByIdAndUpdate(
@@ -101,6 +101,8 @@ router.delete("/remove/:id", async (req, res) => {
 // GET ALL AMENITIES.......!
 
 router.get("/", async (req, res) => {
+
+  console.log(req.protocol, req.get('host'));
   try {
     const amenities = await Amenities.find(); // Finding Amenities from database...!
     res.status(200).json(amenities);

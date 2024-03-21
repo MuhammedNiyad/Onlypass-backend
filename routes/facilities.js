@@ -6,8 +6,8 @@ const router = express.Router();
 router.post("/create", async (req, res) => {
   console.log("reqbody: ", req.body);
   try {
-    const logoBaseUrl = 'http://192.168.1.16:5000/api/images/facility-logo/'
-    const imgBaseUrl = "http://192.168.1.16:5000/api/images/facility-images/";
+    const logoBaseUrl = `${req.protocol}://${req.get('host')}/api/images/facility-logo/`
+    const imgBaseUrl = `${req.protocol}://${req.get('host')}/api/images/facility-images/`;
     // Prepend base URL to each image name
     const imagesWithBaseUrl = req.body.images.map((image) => imgBaseUrl + image);
 

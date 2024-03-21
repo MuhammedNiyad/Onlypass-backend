@@ -48,12 +48,14 @@ const facilitySchema = new Schema(
     },
     logoUrl: {
       type: String,
+      default: "https://www.beelights.gr/assets/images/empty-image.png",
     },
     description: {
       type: String,
     },
     images: {
       type: Array,
+      default: "https://www.beelights.gr/assets/images/empty-image.png",
     },
     address: {
       type: String,
