@@ -102,7 +102,7 @@ router.delete("/remove/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
 
-  console.log(req.protocol, req.get('host'));
+  // console.log(req.protocol, req.get('host'));
   try {
     const amenities = await Amenities.find(); // Finding Amenities from database...!
     res.status(200).json(amenities);

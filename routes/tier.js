@@ -5,13 +5,29 @@ const router = express.Router();
 //CREATE TIER...........!
 router.post('/create-tier', async (req, res) => {
     try {
+        console.log("tier ====", req.body);
         const newTier = new Tier(req.body);
         await newTier.save();
         res.status(200).json(newTier);
     } catch (error) {
-        res.status(500).json({menubar: 'error.message'});
+        res.status(500).json({"message": error.message});
     }
 });
+
+// Update Tier.....!
+router.put('/update-tier/:id', async (req, res)=>{
+    try {
+        const update = await Tier.findByIdAndUpdate(
+            req.params.id,
+            {...req.body},
+            {new: true}
+        );
+        res.status(200).json(update);
+        console.log(update);
+    } catch (error) {
+        res.status(500).json({"message": error.message});
+    }
+})
 
 //DELETE TIER .......!
 router.delete('/delete-tier/:id', async (req, res)=>{

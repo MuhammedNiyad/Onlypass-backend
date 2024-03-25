@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 
 
 const tierSchema = new mongoose.Schema({
-    name: {
+    tier_name: {
         type:String,
         required: true,
+    },
+    description:{
+        type:String,
+    },
+    status:{
+        type:Boolean,
     }
 },{timestamps:true});
 

@@ -5,6 +5,11 @@ const countrySchame = new mongoose.Schema({
         type:String,
         required:true,
         unique:true
+    },
+    country_code:{
+        type:String,
+        required:true,
+        unique:true
     }
 },{timestamp:true});
 
