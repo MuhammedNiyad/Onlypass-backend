@@ -23,7 +23,7 @@ router.put('/update-tier/:id', async (req, res)=>{
             {new: true}
         );
         res.status(200).json(update);
-        console.log(update);
+        // console.log(update);
     } catch (error) {
         res.status(500).json({"message": error.message});
     }

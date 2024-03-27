@@ -88,15 +88,8 @@ const facilitySchema = new Schema(
     ],
     equipments: [
       {
-        equipments_id:{
-          type:String,
-        },
-        equipment_name:{
-          type:String,
-        },
-        equipment_img:{
-          type:String,
-        }
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Equipment"
       }
     ],
     facilityTiming: [
@@ -162,6 +155,15 @@ const facilitySchema = new Schema(
     review: {
       type: Array,
     },
+    // access_devices:{
+    //   type: Array,
+    // },
+    isEnable:{
+      type: Boolean,
+    },
+    isForWeb:{
+      type:Boolean,
+    }
   },
   { timestamps: true }
 );

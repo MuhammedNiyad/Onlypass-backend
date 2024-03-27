@@ -4,12 +4,23 @@ const router = express.Router();
 
 //  CREATE FECILITIES.....!
 router.post("/create", async (req, res) => {
-  console.log("reqbody: ", req.body);
   try {
-    const logoBaseUrl = `${req.protocol}://${req.get('host')}/api/images/facility-logo/`
-    const imgBaseUrl = `${req.protocol}://${req.get('host')}/api/images/facility-images/`;
+    const logoBaseUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/images/facility-logo/`;
+    const imgBaseUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/images/facility-images/`;
     // Prepend base URL to each image name
-    const imagesWithBaseUrl = req.body.images.map((image) => imgBaseUrl + image);
+    const imagesWithBaseUrl = req.body.images.map(
+      (image) => imgBaseUrl + image
+    );
+    console.log("reqbody: ", req.body);
+    const equipmentsIds = req.body.equipments.map(
+      (equipment) => equipment.equipment_id
+    );
+
+    // console.log("equipments:==", equipmentsIds);
 
     const newFacilities = new Facilities({
       user_role: req.body.user_role,
@@ -21,7 +32,7 @@ router.post("/create", async (req, res) => {
       emailAddress: req.body.emailAddress,
       phoneNumber: req.body.phoneNumber,
       websiteURL: req.body.websiteURL,
-      logoUrl: logoBaseUrl+req.body.logoUrl,
+      logoUrl: logoBaseUrl + req.body.logoUrl,
       description: req.body.description,
       images: imagesWithBaseUrl,
       address: req.body.address,
@@ -30,7 +41,7 @@ router.post("/create", async (req, res) => {
       state: req.body.state,
       latitude_longitude: req.body.latitude_longitude,
       amenities: req.body.amenities,
-      equipments: req.body.equipments,
+      equipments: equipmentsIds,
       facilityTiming: req.body.facilityTiming,
       admission_fee: req.body.admission_fee,
       amountPer_day: req.body.amountPer_day,
@@ -85,7 +96,9 @@ router.get("/:id", async (req, res) => {
   // console.log("id", req.params.id);
 
   try {
-    const facilities = await Facilities.findById(req.params.id);
+    const facilities = await Facilities.findById(req.params.id).populate(
+      "equipments"
+    );
     res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);
@@ -96,7 +109,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const facilities = await Facilities.find();
+    const facilities = await Facilities.find().populate("equipments");
     res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);

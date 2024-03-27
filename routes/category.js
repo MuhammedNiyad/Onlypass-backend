@@ -23,7 +23,7 @@ router.post('/create', uploadLogo.single("logo"), async (req, res) =>{
     try {
         let logoUrl;
         if(req.file && req.file.filename){
-            logoUrl = `${req.protocol}://${req.get('host')}/api/category/logo/`+ req.file.filename;
+            logoUrl = `${req.protocol}://${req.headers.host}/api/category/logo/`+ req.file.filename;
         } else {
             iconUrl = "https://www.beelights.gr/assets/images/empty-image.png"
         }
@@ -43,12 +43,13 @@ router.post('/create', uploadLogo.single("logo"), async (req, res) =>{
 
 // update category........!
 router.put('/update/:id',uploadLogo.single("logo"),async (req, res)=>{
-    console.log("update date:==", req,body,req,file);
+    console.log("update date:==", req.body,req.file);
     let logoUrl;
         if(req.file && req.file.filename){
-            logoUrl = `${req.protocol}://${req.get('host')}/api/category/logo/`+ req.file.filename;
+            console.log("inside condition")
+            logoUrl = `${req.protocol}://${req.headers.host}/api/category/logo/`+ req.file.filename;
         } else {
-            iconUrl = "https://www.beelights.gr/assets/images/empty-image.png"
+            logoUrl = "https://www.beelights.gr/assets/images/empty-image.png"
         }
     try {
         const update =  await Category.findByIdAndUpdate(
@@ -61,7 +62,7 @@ router.put('/update/:id',uploadLogo.single("logo"),async (req, res)=>{
                 ...req.body,
             }
         );
-        express.response.status(200).json(update);
+        res.status(200).json(update);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -88,7 +89,7 @@ router.get("/all-category", async (req, res)=>{
 })
 
 // get logos......!
-router.get('logo/:logoName', (req,res)=>{
+router.get('/logo/:logoName', (req,res)=>{
     const imageName = req.params.logoName;
     const imagesFolder = path.join(__dirname, "../Upload", "category_logo");
     const imagePath = path.join(imagesFolder, imageName);
