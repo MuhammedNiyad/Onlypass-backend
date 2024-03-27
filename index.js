@@ -23,7 +23,8 @@ app.use("/api/membership", require("./routes/memberShip"));
 app.use("/api/facility-type", require("./routes/facility_type"));
 app.use("/api/customer/", require("./routes/CustomerRoutes/customer"));
 app.use("/api/customer-membership",require("./routes/CustomerRoutes/customerMembership"));
-app.use("/api/category",require("./routes/category"))
+app.use("/api/category",require("./routes/category"));
+app.use("/api/review",require("./routes/review"));
 
 mongoose
   .connect(process.env.MONGO_URL)

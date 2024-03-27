@@ -5,7 +5,7 @@ const router = express.Router();
 //CREATE TIER...........!
 router.post('/create-tier', async (req, res) => {
     try {
-        console.log("tier ====", req.body);
+        // console.log("tier ====", req.body);
         const newTier = new Tier(req.body);
         await newTier.save();
         res.status(200).json(newTier);

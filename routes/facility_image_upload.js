@@ -23,7 +23,10 @@ router.post(
   uploadImg.array("facility_images"),
   async (req, res) => {
     try {
-      console.log(req.files);
+      const imgBaseUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/images/facility-images/`;
+      // console.log(req.files);
 
       const newItems = [];
 
@@ -39,8 +42,11 @@ router.post(
       // Save all items to the database
       await FacilityImgs.insertMany(newItems);
 
-      console.log("Images upload:", newItems);
-      res.status(200).json(newItems);
+      const imagesWithBaseUrl = newItems.map(
+        (image) => imgBaseUrl + image.facility_images
+      );
+      console.log("Images upload:", imagesWithBaseUrl);
+      res.status(200).json(imagesWithBaseUrl);
     } catch (error) {
       console.log({ error });
       res.status(404).json({ message: error.message });
@@ -66,6 +72,9 @@ router.post(
   "/upload-logo",
   uploadFacilityLogo.single("logo"),
   async (req, res) => {
+    const logoBaseUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/images/facility-logo/`;
     try {
       console.log("upload: ", req.body);
       const newItem = new FacilityImgs({
@@ -73,8 +82,8 @@ router.post(
         facility_images: req.file.filename,
       });
       await newItem.save();
-      //   console.log("image upload:", newItem);
-      res.status(200).json(newItem);
+        console.log("image upload:", {newItem: logoBaseUrl+newItem.facility_images});
+      res.status(200).json(logoBaseUrl+newItem.facility_images);
     } catch (error) {
       res.status(404).json({ message: error.message });
     }

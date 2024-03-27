@@ -152,9 +152,12 @@ const facilitySchema = new Schema(
     other: {
       type: String,
     },
-    review: {
-      type: Array,
-    },
+    review:[
+      {
+        type:Schema.Types.ObjectId,
+        ref:"Review",
+      }
+    ],
     // access_devices:{
     //   type: Array,
     // },

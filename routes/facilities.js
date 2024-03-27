@@ -5,16 +5,6 @@ const router = express.Router();
 //  CREATE FECILITIES.....!
 router.post("/create", async (req, res) => {
   try {
-    const logoBaseUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/images/facility-logo/`;
-    const imgBaseUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/images/facility-images/`;
-    // Prepend base URL to each image name
-    const imagesWithBaseUrl = req.body.images.map(
-      (image) => imgBaseUrl + image
-    );
     console.log("reqbody: ", req.body);
     const equipmentsIds = req.body.equipments.map(
       (equipment) => equipment.equipment_id
@@ -32,9 +22,9 @@ router.post("/create", async (req, res) => {
       emailAddress: req.body.emailAddress,
       phoneNumber: req.body.phoneNumber,
       websiteURL: req.body.websiteURL,
-      logoUrl: logoBaseUrl + req.body.logoUrl,
+      logoUrl: req.body.logoUrl,
       description: req.body.description,
-      images: imagesWithBaseUrl,
+      images: req.body.images,
       address: req.body.address,
       pin_code: req.body.pin_code,
       country: req.body.country,
@@ -64,23 +54,42 @@ router.post("/create", async (req, res) => {
 
 // UPDATE FECILITIES.......!
 router.put("/update/:id", async (req, res) => {
-  console.log("before update>>>>>>>>>>>>>>>>>", req.body);
+  // console.log("before update>>>>>>>>>>>>>>>>>", req.body);
   try {
-    const updatedFacility = await Facilities.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    );
-    res.status(200).json(updatedFacility);
-    console.log("<<<<<<<updated>>>>>>>>>>>>>", updatedFacility);
+    
+     // Extract equipments from the request body and map them to their IDs
+      console.log()
+      
+     const equipmentsIds = req.body.equipments?.map(
+       (equipment) => equipment.equipment_id
+     );
+ 
+     // Prepare the update object, including the equipments array
+     const updateData = {
+       ...req.body,
+       equipments: equipmentsIds, // Overwrite the equipments array with the IDs
+     };
+ 
+     // Find the facility by ID and update it with the new data
+     const updatedFacility = await Facilities.findByIdAndUpdate(
+       req.params.id,
+       {
+         $set: updateData,
+       },
+       { new: true } // Return the updated document
+     );
+ 
+     if (!updatedFacility) {
+       return res.status(404).json({ message: "Facility not found" });
+     }
+ 
+     res.status(200).json(updatedFacility);
+    //  console.log("<<<<<<<updated>>>>>>>>>>>>>", updatedFacility);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json(error.message);
+     console.log(error.message);
+     res.status(500).json({ message: error.message });
   }
-});
-
+ });
 // DELETE FECILITIES.......!
 router.delete("/remove/:id", async (req, res) => {
   try {
@@ -98,7 +107,7 @@ router.get("/:id", async (req, res) => {
   try {
     const facilities = await Facilities.findById(req.params.id).populate(
       "equipments"
-    );
+    ).populate("review");
     res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);
@@ -109,7 +118,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const facilities = await Facilities.find().populate("equipments");
+    const facilities = await Facilities.find().populate("equipments").populate("review");
     res.status(200).json(facilities);
   } catch (error) {
     res.status(500).json(error.message);

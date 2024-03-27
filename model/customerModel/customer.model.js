@@ -50,7 +50,7 @@ const customerSchema = new mongoose.Schema(
     },
     customer_type: {
       type: String,
-      required: "OnlyPass",
+      default:"Only Pass"
     },
     activeMembership: [
       {
